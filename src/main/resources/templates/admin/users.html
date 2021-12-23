@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout=“http://www.ultraq.net.nz/thymeleaf/layout”
+layout:decorate="~{backend/backend}">
+<head>
+<meta charset="ISO-8859-1">
+<title>User</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"></link>
+</head>
+<body>
+	<th:block layout:fragment="sub-title">User</th:block>
+	<th:block layout:fragment="content">
+		<div class="container my-5">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="text-info d-inline-block">User Lists</h4>
+					<a th:href="@{/users/add}" class="btn btn-outline-primary float-right"><i class="fas fa-plus mr-2"></i>Add New</a>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Email</th>
+							<th>Role</th>
+							<th>Phone</th>
+							<th>Action</th>
+						</tr>
+						<th:block th:each="c,i:${users}">
+							<tr>
+								<td th:text="${i.count}"></td>
+								<td th:text="${c.name}"></td>
+								<td th:text="${c.email}"></td>
+								<td th:text="${c.role}"></td>
+								<td th:text="${c.phone}"></td>
+								<td>
+									<a th:href="@{'/users/edit/'+${c.id}}" class="btn btn-outline-success">Edit</a>
+									<a onclick="return confirm('u sure want delete')" th:href="@{'/users/delete/'+${c.id}}" class="btn btn-outline-danger">Delete</a>
+								</td>
+							</tr>
+						</th:block>
+					</table>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</body>
+</html>

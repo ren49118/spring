@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	 <header class="header-global" th:fragment="menu"> 
+	    <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg navbar-theme-primary headroom navbar-light navbar-transparent navbar-theme-primary">
+	        <div class="container position-relative">
+	            <a class="navbar-brand shadow-soft py-2 px-3 rounded border border-light mr-lg-4" th:href="@{/}">
+	                <img class="navbar-brand-dark" th:src="@{./frontend/assets/img/brand/dark.svg}" alt="Logo light">
+	                <img class="navbar-brand-light" th:src="@{./frontend/assets/img/brand/dark.svg}" alt="Logo dark">
+	            </a>
+	            <div class="navbar-collapse collapse justify-content-center" id="navbar_global">
+	                <ul class="navbar-nav navbar-nav-hover">
+	                    <li class="nav-item">
+	                        <a href="#home" class="btn btn-primary">Home</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a href="#about" class="btn btn-primary">About</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a href="#product" class="btn btn-primary">Product</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a href="#contact" class="btn btn-primary">Contact</a>
+	                    </li>
+	                </ul>
+	            </div>
+	            <div class=" justify-content-end">
+	            	<ul class="navbar-nav navbar-nav-hover">
+	                    <li class="nav-item">
+	                        <a th:href="@{/login}" class="btn btn-primary">
+	                        	<i class="fas fa-user-circle text-info"></i>
+	                        </a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a th:href="@{/register}" class="btn btn-primary">
+	                        	<i class="fas fa-user-plus text-success"></i>
+	                        </a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a th:href="@{/checkin}" class="btn btn-primary">
+								<i class="fas fa-cart-plus text-danger"></i>
+							</a>
+	                    </li>
+	                    
+	                </ul>
+	            </div>
+	        </div>
+	    </nav>
+	</header>
+</body>
+</html>

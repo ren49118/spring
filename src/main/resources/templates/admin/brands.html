@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout=“http://www.ultraq.net.nz/thymeleaf/layout”
+layout:decorate="~{backend/backend}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Brand</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"></link>
+</head>
+<body>
+	<th:block layout:fragment="sub-title">Brands</th:block>
+	<th:block layout:fragment="content">
+		<div class="container my-5">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="text-info d-inline-block">Brand Lists</h4>
+					<a class="btn btn-outline-primary float-right" id="add"><i class="fas fa-plus mr-2"></i>Add New</a>
+				</div>
+				<div class="card-body">
+					<table class="table table-striped table-bordered">
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Action</th>
+						</tr>
+						<tbody class="table-body">
+						
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="addbrand" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		  <form action="" method="post" id="save-brand" class="form">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLongTitle"><span class="title-cat"></span> Brand</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      		<span id="message" class="text-danger d-none"></span>
+		      		<input type="hidden" id="brand-id" />
+		      		<div class="form-group">
+		      			<label for="">Name</label>
+		      			<input type="text" name="name" id="name" class="form-control" />
+		      		</div>
+		      		
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="submit" id="save-cat" class="btn btn-primary">Save changes</button>
+		        </form>
+		      </div>
+		    </div>
+	</th:block>
+	<th:block layout:fragment="js">
+		<script>
+			$(document).ready(function(){
+				show();
+				$('#add').click(function(evt){
+					$('#addbrand').modal('show');
+					$('.title-cat').html("Create");
+					$('#brand-id').val(0);
+					evt.preventDefault();
+					$('#name').val("");
+				});
+				$(document).on('click','.edit-btn',function(){
+					let id = $(this).data("id");
+					$.ajax({
+						url : '/api/brand/find/'+id,
+						type : 'GET',
+						success : function(result){
+							if(result.data != null){
+								let cat = result.data[0];
+								$('#brand-id').val(cat.id);
+								$('.title-cat').html("Edit");
+								$('#name').val(cat.name);
+								$('#addbrand').modal('show');
+							}
+						}
+					});
+					
+				});
+				$(document).on('click','.delete-btn',function(){
+					let id = $(this).data("id");
+					if(confirm("are u sure")){
+						$.ajax({
+							url : 'api/brand/delete/'+id,
+							type : 'DELETE',
+							success : function(result){
+								if(result.responeMsg == 'success'){
+									show();
+								}
+							}
+							
+						})
+					}
+					
+				});
+				$('#save-brand').submit(function(evt){
+					evt.preventDefault();
+					let brandId = $('#brand-id').val();
+					let urlVal = (brandId == 0) ? '/api/brand/create' : '/api/brand/edit/'+brandId;
+					let typeVal = (brandId == 0)? 'POST' : 'PUT';
+					let formData= {
+							name : $('#name').val()
+						}
+					$.ajax({
+						url : urlVal,
+						type : typeVal,
+						contentType : 'application/json',
+						dataType : 'json',
+						data : JSON.stringify(formData),
+						success : function(result){	
+							if(result.responeMsg == 'duplicate'){
+								
+								$('#message').html("category already exists");
+								$('#message').removeClass('d-none');
+								$('#message').removeClass('text-success');
+								$('#message').addClass('text-danger');
+							}
+							else if (result.responseMsg == 'success'){
+								$('#message').html("success");
+								$('#message').removeClass('d-none');
+								$('#message').removeClass('text-danger');
+								$('#message').addClass('text-success');
+							}
+							show();
+							
+						},
+						error :function(err){
+							alert("Error");
+							console.log("error");
+						}
+					})
+				});
+				function show(){
+					$.ajax({
+						url : 'api/brand/all',
+						type : 'GET',
+						success : function(result){
+							let html;
+							let j = 1;
+							if(result != null){
+								$.each(result.data,function(i,cat){
+									
+									 html +=`<tr>
+												<td>${j++}</td>
+												<td>${cat.name}</td>
+												<td>
+													<a data-id="${cat.id}" class="btn btn-outline-success edit-btn">Edit</a>
+													<a data-id="${cat.id}" class="btn btn-outline-danger delete-btn">Delete</a>
+												</td>
+											</tr>`;
+								});
+								$('.table-body').html(html);
+							}
+						},
+						error : function(err){
+							
+						}
+					});
+				}
+			})
+		</script>
+	</th:block>
+</body>
+</html>

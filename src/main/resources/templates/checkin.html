@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout=“http://www.ultraq.net.nz/thymeleaf/layout”
+layout:decorate="~{frontend/frontend-template}">
+<head>
+<meta charset="ISO-8859-1">
+<title>checkin</title>
+</head>
+<body>
+	<th:block layout:fragment="contents">
+			<div class="container my-5 rounded">
+			<div class="card bg-primary shadow-inset my-3">
+				<div class="card-body">
+					<h4 class="d-inline-block text-danger">Cart Table</h4>
+					<a  th:href="@{/}" class="btn btn-primary text-success float-right animate-up-2"><i class="fas fa-backward mr-2"></i>View More</a>
+					
+				</div>
+			</div>
+			<form action="">
+			<table class="table shadow-inset rounded table-striped">
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Price</th>
+					<th>SubQty</th>
+					<th>SubPrice</th>
+				</tr>
+				<tbody id="checkin-body">
+				
+				</tbody>
+			</table>
+			<div class="row">
+				<div class="col-12 col-md-4 offset-md-8">
+					<div class="d-flex justify-content-end">
+						<div class="mr-4" style="display:flex;justify-content:center;align-item:center;">
+							<span class="mt-2">Total: <span id="total"></span></span>
+						</div>
+						<div>	
+							<a th:href="@{/checkout}" class="btn btn-primary  checkout">Checkout</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+	</th:block>
+</body>
+</html>

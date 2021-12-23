@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout=“http://www.ultraq.net.nz/thymeleaf/layout”
+layout:decorate="~{backend/backend}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Dashboard</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"></link>
+</head>
+<body>
+	<th:block layout:fragment="sub-title">Dashboard</th:block>
+	<th:block layout:fragment="content">
+		<div class="container my-5">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="text-info d-inline-block">Order List</h4>
+					<a href="" class="btn btn-outline-primary float-right"><i class="fas fa-plus mr-2"></i>Add New</a>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Email</th>
+							<th>Action</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>SaiKyawMyoTun</td>
+							<td>saikyawmyotun.it@gmail.com</td>
+							<td>
+								<a href="" class="btn btn-outline-info"><i class="far fa-edit mr-2"></i>Edit</a>
+								<a href="" class="btn btn-outline-danger"><i class="fas fa-trash-alt mr-2"></i>Delete</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</body>
+</html>

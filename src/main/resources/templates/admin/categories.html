@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout=“http://www.ultraq.net.nz/thymeleaf/layout”
+layout:decorate="~{backend/backend}">
+<head>
+<meta charset="ISO-8859-1">
+ 	
+<title>Category</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"></link>
+</head>
+<body>
+	<th:block layout:fragment="sub-title">Categories</th:block>
+	<th:block layout:fragment="content">
+		<div class="container my-5">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="text-info d-inline-block">Category Lists</h4>
+					<a class="btn btn-outline-primary float-right" id="btn-add"><i class="fas fa-plus mr-2"></i>Add New</a>
+				</div>
+				<div class="card-body">
+					<table class="table table-border table-striped">
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Action</th>
+						</tr>
+						<tbody class="table-body"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- Button trigger modal -->
+
+		<!-- Modal -->
+		<div class="modal fade" id="addcat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		  <form action="" method="post" id="save-cat" class="form">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLongTitle"><span class="title-cat"></span> Category</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      		<span id="message" class="text-danger d-none"></span>
+		      		<input type="hidden" id="cat-id" />
+		      		<div class="form-group">
+		      			<label for="">Name</label>
+		      			<input type="text" name="name" id="name" class="form-control" />
+		      		</div>
+		      		
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="submit" id="" class="btn btn-primary">Save changes</button>
+		        </form>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</th:block>
+	<th:block layout:fragment="js">
+		<script th:src="@{../js/category.js}"></script>
+	</th:block>
+</body>
+</html>

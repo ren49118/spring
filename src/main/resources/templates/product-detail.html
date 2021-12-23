@@ -1,0 +1,85 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout=“http://www.ultraq.net.nz/thymeleaf/layout”
+layout:decorate="~{frontend/frontend-template}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Product-Detail</title>
+</head>
+<body>
+	<th:block layout:fragment="contents">
+		<section class="section section-lg pt-0">
+            <div class="container">
+                <div class="row align-items-center justify-content-around">
+                    <div class="col-md-6 col-xl-6 mb-5">
+                        <div class="card bg-primary shadow-soft border-light organic-radius p-3">
+                            
+                            <img src="" alt="" class="organic-radius img-fluid proimg" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-5 text-center text-md-left">
+                        <h2 class="h1 mb-4 proname"></h2>
+                        <table class="table table-borderless">
+                       
+                        	<tr>
+                        		<th>Name</th>
+                        		<td class="proname"></td>
+                        	</tr>
+                        	<tr>
+                        		<th>Price</th>
+                        		<td id="proprice"></td>
+                        	</tr>
+                        	<tr>
+                        		<th>Brand</th>
+                        		<td id="brand"></td>
+                        	</tr>
+                        	<tr>
+                        		<th>Category</th>
+                        		<td id="category"></td>
+                        	</tr>
+                        	
+                        	<tr>
+                        		<th>Description</th>
+                        		<td id="description">
+                        			
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td></td>
+                        		<td>
+                        			 <a href="#" class="btn btn-primary text-info float-right ml-2 animate-up-2"><i class="fas fa-cart-plus mr-2"></i>Add To Cart</a>
+                            		<a th:href="@{/}" class="btn btn-primary text-success float-right animate-up-2"><i class="fas fa-backward mr-2"></i>View More</a>
+                        		</td>
+                        	</tr>
+                        
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+	</th:block>
+	<th:block layout:fragment="js">
+		<script>
+			$(document).ready(function(){
+				let url = window.location.href;
+				let id = url.substring(url.length - 1); // last word
+				$.ajax({
+					url : 'api/products/find/'+id,
+					type: 'GET',
+					success:function(result){
+						if(result.data != null){
+							let cat = result.data[0];
+							$('.proname').html(cat.name);
+							$('#proprice').html(cat.price);
+							$('#brand').html(cat.brand.name);
+							$('#category').html(cat.category.name);
+							$('#description').html(cat.description);
+							$('.proimg').attr('src',cat.photoPath);
+							
+						}
+					}
+				});
+			});
+		</script>
+	</th:block>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout=“http://www.ultraq.net.nz/thymeleaf/layout”
+layout:decorate="~{backend/backend}">
+<head>
+<meta charset="ISO-8859-1">
+<title>User</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"></link>
+</head>
+<body>
+	<th:block layout:fragment="sub-title">Product</th:block>
+	<th:block layout:fragment="content">
+		<div class="container my-5">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="text-info d-inline-block">
+						<th:block th:if="${product.id == 0}" th:text="Add"></th:block>
+						<th:block th:if="${product.id != 0}" th:text="Edit"></th:block> Product</h4>
+					<a th:href="@{/products}" class="btn btn-outline-primary float-right"><i class="fas fa-plus mr-2"></i>Back</a>
+				</div>
+				<div class="card-body">
+					<form th:action="@{/products/save}" class="form" method="POST" th:object="${product}" enctype="multipart/form-data">
+						<input type="hidden" th:field="*{id}" />
+						<input type="hidden" name="oldFile" th:value="${oldPhoto}" />
+						<div class="form-group">
+							<label for="">Photo</label>
+							<input type="file"  class="form-control-file" name="uploadPhoto" />
+						</div>
+						<div class="form-group">
+							<label>Name</label>
+							<input type="text" class="form-control" th:field="*{name}" />
+						</div>
+						<div class="form-group">
+							<label>Price</label>
+							<input type="number" class="form-control" th:field="*{price}" />
+						</div>
+						<div class="form-group">
+							<label for="">Brand</label>
+							<select name="" id="" class="form-control" th:field="*{brand.id}">
+								<th:block th:each="c :${brands}">
+									<option  th:value="${c.id}" th:text="${c.name}" ></option>
+								</th:block>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="">Category</label>
+							<select name="" id="" class="form-control" th:field="*{category.id}">
+								<th:block th:each="c :${categories}">
+									<option  th:value="${c.id}" th:text="${c.name}" ></option>
+								</th:block>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="">Description</label>
+							<textarea name="" id="" cols="30" rows="10" class="form-control" th:field="*{description}"></textarea>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-outline-info" type="submit">
+								<th:block th:if="${product.id == 0}" th:text="Create"></th:block>
+								<th:block th:if="${product.id != 0}" th:text="Update"></th:block>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</body>
+</html>
